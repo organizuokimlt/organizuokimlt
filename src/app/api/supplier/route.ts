@@ -1,3 +1,4 @@
+export const runtime = "nodejs";
 // Serverio maršrutas formos apdorojimui
 import { NextResponse } from "next/server";
 import { supabase } from "@/lib/supabase";
@@ -33,7 +34,7 @@ export async function POST(req: Request) {
     if (error) throw error;
 
     // Laiškai (tik jei SMTP konfigūruotas .env.local)
-    const smtpReady = !!(process.env.SMTP_USER && process.env.SMTP_PASS);
+    const smtpReady = false;
     if (smtpReady) {
       await transporter.sendMail({
         from: `"Organizuokim.lt" <${process.env.SMTP_USER}>`,
