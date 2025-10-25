@@ -1,349 +1,139 @@
+/* ============================================
+  ORGANIZUOKIM.LT — HERO LOCKED (MOBILE + MBP)
+  Etalonas: fonas, tekstai, kaukė  —  OK
+  Data: šiandien
+  Nekeičiam be aiškaus poreikio. Nauji bandymai -> atskiroje šakoje.
+============================================ */
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-  --gold: #B68C2C;
+/* === BAZĖ – spalvos, šriftas === */
+:root{
+  --bg:#0a0a0a;
+  --fg:#f5f5f5;
+  --gold:#B68C2C;
+
+  /* 🎭 KAUKĖ ir ✨ TEKSTAI – DEFAULT (TELEFONAMS) */
+  --mask-visible: 1;      /* 0 – paslėpta, 1 – matosi. Dabar SLĖPTA, kad grąžintume tobulybę */
+  --mask-w: 62vw;         /* kaukės plotis telefone */
+  --mask-max: 100px;      /* kaukės „lubos“ telefone */
+  --mask-shift: 30vh;     /* kaukės vertikalus poslinkis (– kelia aukštyn) */
+
+  --title-size: 40px;     /* „Organizuokim.lt“ dydis telefone */
+  --title-shift: 10vh;     /* viso tekstų bloko poslinkis telefone */
+  --subtitle-size: 18px;  /* „Profesionalų kūrybos aljansas“ dydis tel. */
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+@theme inline{
+  --color-background:var(--bg);
+  --color-foreground:var(--fg);
+  --font-sans:var(--font-geist-sans);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
-body {
-  background: var(--background);
-  color: var(--foreground);
+html,body{
+  background:var(--bg);
+  color:var(--fg);
   font-family: Arial, Helvetica, sans-serif;
 }
 
-/* -------------------------------------------------------
-   LOGO AURA + PLAQUĖ
-   ------------------------------------------------------- */
-
-/* Aura konteineris, ant kurio kabinsim „senovinį“ spotą */
-.logo-aura {
+/* === HERO – FONAS (telefonams) ===
+   Naudojame *bottom* kad matytųsi grindys. */
+.hero {
   position: relative;
-  display: inline-block;
-  isolation: isolate; /* kad pseudo-elementai liktų už logotipo */
+  min-height: 100svh;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  background: url("/hero-mobile.png") center bottom / cover no-repeat;
 }
 
-/* Nereguliarus „senovinis“ spotas, einantis UŽ plokštelės ribų (dark) */
-.logo-aura::before {
-  content: "";
-  position: absolute;
-  z-index: -2;
-  inset: -48px -72px -48px -48px; /* išeina už plokštelės */
-  border-radius: 36px;
-  pointer-events: none;
-  opacity: 0; /* light režime – beveik nematomas, dark – perrašysim žemiau */
-  filter: blur(22px);
-  background: transparent;
-}
-
-/* Plokštelė (plaque) tiesiogiai po logotipu */
-.logo-card {
-  position: relative;
-  display: inline-flex;
-  align-items: center;
-  padding: 10px 14px;
-  border-radius: 14px;
-  backdrop-filter: blur(4px) saturate(112%);
-  -webkit-backdrop-filter: blur(4px) saturate(112%);
-  box-shadow:
-    0 8px 24px rgba(0,0,0,0.18),
-    0 1px 0 rgba(255,255,255,0.12) inset;
-  border: 1px solid rgba(0,0,0,0.10);
-  background:
-    linear-gradient(180deg, rgba(255,255,255,0.88), rgba(255,255,255,0.75));
-}
-
-/* LIGHT tema: subtili plokštelė, beveik be spoto */
-@media (prefers-color-scheme: light) {
-  .logo-aura::before {
-    opacity: 0.08;
-    background:
-      radial-gradient(260px 140px at 35% 40%, rgba(0,0,0,0.10), transparent 70%);
+/* 💻 MacBook Pro zona (≥1280px) – horizontali nuotrauka, laikom grindis */
+@media (min-width: 1280px){
+  .hero{
+    background-image: url("/hero-desktop.png");
+    background-position: center bottom;
+    background-size: cover;
   }
-  .logo-card {
-    border-color: rgba(0,0,0,0.10);
-    background:
-      linear-gradient(180deg, rgba(255,255,255,0.88), rgba(255,255,255,0.75));
-    box-shadow:
-      0 8px 24px rgba(0,0,0,0.12),
-      0 1px 0 rgba(255,255,255,0.10) inset;
+
+  /* 🎭 KAUKĖ ir ✨ TEKSTAI – MacBook Pro */
+  :root{
+    --mask-visible: 1;      /* jei norėsi įjungti kaukę – pakeisk į 1 */
+    --mask-w: 36vw;
+    --mask-max: 160px;
+    --mask-shift: 25vh;
+
+    --title-size: 68px;
+    --title-shift: 15vh;    /* šiek tiek aukščiau nuo centro */
+    --subtitle-size: 32px;
   }
 }
 
-/* DARK tema: šviesi plokštelė + nereguliarus, šiltas, plačiai sklindantis spotas */
-@media (prefers-color-scheme: dark) {
-  .logo-aura::before {
-    opacity: 0.95;                   /* RYŠKUS */
-    filter: blur(20px);              /* šiek tiek ryškiau nei light */
-    background:
-      /* Baltas branduolys (skaitymui) */
-      radial-gradient(260px 120px at 45% 55%, rgba(255,255,255,0.40), transparent 72%),
-      /* Auksinė aureola (šilta scena) */
-      radial-gradient(360px 220px at 30% 40%, rgba(182,140,44,0.38), transparent 75%),
-      /* Didesnė nelygi šviesos dėmė, kad „užrūktų“ foną */
-      radial-gradient(720px 420px at -20% -30%, rgba(255,255,255,0.12), transparent 70%),
-      /* Nereguliarumas – „senovinio“ projektoriaus pojūtis */
-      conic-gradient(from 15deg at 35% 45%, rgba(255,255,255,0.10), rgba(255,255,255,0.00) 25%, rgba(255,255,255,0.06) 55%, rgba(255,255,255,0.00) 80%, rgba(255,255,255,0.10));
-  }
-
-  .logo-card {
-    /* sąmoningai ŠVIESI plokštelė dark režime, kad juodas logas būtų kontrastingas */
-    background:
-      linear-gradient(180deg, rgba(255,255,255,0.20), rgba(255,255,255,0.14));
-    border-color: rgba(255,255,255,0.24);
-    box-shadow:
-      0 12px 36px rgba(0,0,0,0.55),
-      0 0 0 1px rgba(255,255,255,0.08) inset;
-  }
+/* 🌫️ Vinjetės – subtilu, be „kortelių“ */
+.hero::before,
+.hero::after{
+  content:"";
+  position:absolute; inset:0;
+  pointer-events:none;
+}
+.hero::before{
+  background:
+    radial-gradient(120% 60% at 50% -10%, rgba(0,0,0,0.18), transparent 52%),
+    radial-gradient(140% 80% at 50% 0%, rgba(0,0,0,0.32), transparent 62%);
+}
+.hero::after{
+  background: linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.28) 70%, rgba(0,0,0,0.55) 100%);
 }
 
-/* Plonas auksinis mikro-akcentas plokštelės apačioje (abiem temoms) */
-.logo-card::after {
-  content: "";
-  position: absolute;
-  left: 12px;
-  right: 12px;
-  bottom: 6px;
-  height: 2px;
-  border-radius: 9999px;
-  background: linear-gradient(90deg, transparent, var(--gold), transparent);
-  opacity: 0.55;
-  pointer-events: none;
-}/* ===== HERO FONAI ===== */
-
-/* 1) "Scenos uždanga": aksominis bordo → juoda + šviesa iš viršaus */
-.hero-stage {
+/* === TURINYS – centras ir švytėjimai (tobulas tekstas) === */
+.hero-inner{
   position: relative;
-  overflow: hidden;
-  border-radius: 18px;
-  padding: 48px;
-  background:
-    radial-gradient(160% 140% at 50% -30%, rgba(255,255,255,0.08), transparent 60%),
-    linear-gradient(180deg, #2a0f16 0%, #12080a 40%, #0a0a0a 100%);
-  box-shadow:
-    inset 0 1px 0 rgba(255,255,255,0.06),
-    0 20px 60px rgba(0,0,0,0.45);
+  z-index: 1;
+  text-align: center;
+  padding-inline: clamp(16px, 4vw, 40px);
+  max-width: 1100px;
+  margin-inline: auto;
+  transform: translateY(var(--title-shift)); /* 👈 kelk/leis visą tekstų bloką */
 }
 
-.hero-stage::before {
-  /* prožektoriaus šviesa iš viršaus (teatro užuolaidos nuojauta) */
-  content: "";
-  position: absolute;
-  inset: -120px -40px auto -40px;
-  height: 220px;
+.hero-title{
+  font-weight: 800;
+  letter-spacing: .015em;
+  line-height: 1.05;
+  font-size: var(--title-size);
+  color: #EADCA9;
+  text-shadow:
+    0 0 85px rgba(255,240,200,0.40),
+    0 0 52px rgba(232,217,182,0.25),
+    0 0 30px rgba(232,217,182,0.10),
+    0 4px 26px rgba(0,0,0,0.80);
+}
+
+.hero-sub{
+  margin-top: .6rem;
+  font-weight: 400;
+  font-size: var(--subtitle-size);
+  color: #F8EFD9;
+  text-shadow:
+    0 0 70px rgba(248,239,217,0.40),
+    0 0 40px rgba(248,239,217,0.25),
+    0 0 25px rgba(244,235,210,0.10),
+    0 3px 16px rgba(0,0,0,0.75);
+}
+
+/* === 🎭 KAUKĖ – overlay (nieko nestumia), valdoma kintamaisiais === */
+.mask-wrap{
   pointer-events: none;
-  background:
-    radial-gradient(60% 140% at 50% 0%, rgba(255,255,255,0.24), rgba(255,255,255,0.0) 70%),
-    radial-gradient(40% 70% at 20% 0%, rgba(182,140,44,0.18), rgba(182,140,44,0) 80%);
-  filter: blur(8px);
-}
-
-/* subtilus vinjetas aplink kraštus */
-.hero-stage::after {
-  content: "";
   position: absolute;
   inset: 0;
-  pointer-events: none;
-  background:
-    radial-gradient(120% 120% at 50% 100%, rgba(0,0,0,0.35), transparent 55%);
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  transform: translateY(var(--mask-shift)); /* 👈 kelk/leis kaukę */
+  opacity: var(--mask-visible);             /* 👈 0 = paslėpta, 1 = matosi */
+  transition: opacity .25s ease;
 }
-
-/* 2) "Šviesos repeticija": šilta auksinė šviesa + dūmo gradientas */
-.hero-rehearsal {
-  position: relative;
-  overflow: hidden;
-  border-radius: 18px;
-  padding: 48px;
-  background:
-    radial-gradient(120% 180% at 50% 10%, rgba(255,255,255,0.12), transparent 55%),
-    linear-gradient(180deg, #1a1208 0%, #2e1b0c 45%, #0a0a0a 100%);
-  box-shadow:
-    inset 0 1px 0 rgba(255,255,255,0.05),
-    0 18px 60px rgba(0,0,0,0.45);
-}
-
-.hero-rehearsal::before {
-  /* platus „senovinis“ spotas su dūmo nuojauta */
-  content: "";
-  position: absolute;
-  inset: -80px -80px -40px -80px;
-  pointer-events: none;
-  filter: blur(18px);
-  opacity: 0.95;
-  background:
-    radial-gradient(480px 260px at 28% 10%, rgba(255,255,255,0.30), transparent 70%),
-    radial-gradient(560px 300px at 18% 0%, rgba(182,140,44,0.42), transparent 75%),
-    radial-gradient(1200px 600px at -10% -30%, rgba(255,255,255,0.12), transparent 70%),
-    conic-gradient(from 22deg at 20% 5%, rgba(255,255,255,0.10), rgba(255,255,255,0.00) 25%, rgba(255,255,255,0.08) 60%, rgba(255,255,255,0.00) 85%, rgba(255,255,255,0.10));
-}
-
-.hero-rehearsal::after {
-  /* švelnus vinjetas dugne */
-  content: "";
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  background:
-    radial-gradient(120% 120% at 50% 100%, rgba(0,0,0,0.35), transparent 55%);
-}/* ===== HERO FONAI ===== */
-
-/* 1) "Scenos uždanga": aksominis bordo → juoda + šviesa iš viršaus */
-.hero-stage {
-  position: relative;
-  overflow: hidden;
-  border-radius: 18px;
-  padding: 48px;
-  background:
-    radial-gradient(160% 140% at 50% -30%, rgba(255,255,255,0.08), transparent 60%),
-    linear-gradient(180deg, #2a0f16 0%, #12080a 40%, #0a0a0a 100%);
-  box-shadow:
-    inset 0 1px 0 rgba(255,255,255,0.06),
-    0 20px 60px rgba(0,0,0,0.45);
-}
-
-.hero-stage::before {
-  /* prožektoriaus šviesa iš viršaus (teatro užuolaidos nuojauta) */
-  content: "";
-  position: absolute;
-  inset: -120px -40px auto -40px;
-  height: 220px;
-  pointer-events: none;
-  background:
-    radial-gradient(60% 140% at 50% 0%, rgba(255,255,255,0.24), rgba(255,255,255,0.0) 70%),
-    radial-gradient(40% 70% at 20% 0%, rgba(182,140,44,0.18), rgba(182,140,44,0) 80%);
-  filter: blur(8px);
-}
-
-/* subtilus vinjetas aplink kraštus */
-.hero-stage::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  background:
-    radial-gradient(120% 120% at 50% 100%, rgba(0,0,0,0.35), transparent 55%);
-}
-
-/* 2) "Šviesos repeticija": šilta auksinė šviesa + dūmo gradientas */
-.hero-rehearsal {
-  position: relative;
-  overflow: hidden;
-  border-radius: 18px;
-  padding: 48px;
-  background:
-    radial-gradient(120% 180% at 50% 10%, rgba(255,255,255,0.12), transparent 55%),
-    linear-gradient(180deg, #1a1208 0%, #2e1b0c 45%, #0a0a0a 100%);
-  box-shadow:
-    inset 0 1px 0 rgba(255,255,255,0.05),
-    0 18px 60px rgba(0,0,0,0.45);
-}
-
-.hero-rehearsal::before {
-  /* platus „senovinis“ spotas su dūmo nuojauta */
-  content: "";
-  position: absolute;
-  inset: -80px -80px -40px -80px;
-  pointer-events: none;
-  filter: blur(18px);
-  opacity: 0.95;
-  background:
-    radial-gradient(480px 260px at 28% 10%, rgba(255,255,255,0.30), transparent 70%),
-    radial-gradient(560px 300px at 18% 0%, rgba(182,140,44,0.42), transparent 75%),
-    radial-gradient(1200px 600px at -10% -30%, rgba(255,255,255,0.12), transparent 70%),
-    conic-gradient(from 22deg at 20% 5%, rgba(255,255,255,0.10), rgba(255,255,255,0.00) 25%, rgba(255,255,255,0.08) 60%, rgba(255,255,255,0.00) 85%, rgba(255,255,255,0.10));
-}
-
-.hero-rehearsal::after {
-  /* švelnus vinjetas dugne */
-  content: "";
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  background:
-    radial-gradient(120% 120% at 50% 100%, rgba(0,0,0,0.35), transparent 55%);
-}import Link from "next/link";
-
-export default function Home() {
-  return (
-    <main className="mx-auto max-w-6xl px-6 py-12">
-      {/* HEADER su juodu logotipu ant plokštelės (paliekam kaip yra) */}
-      <header className="flex items-center gap-4 mb-10">
-        <div className="logo-aura">
-          <div className="logo-card">
-            <img
-              src="/logo.png"
-              alt="Organizuokim.lt"
-              className="h-12 md:h-14 w-auto"
-              loading="eager"
-            />
-          </div>
-        </div>
-
-        <div className="h-6 w-px" style={{ backgroundColor: "rgba(182,140,44,0.6)" }} />
-        <span className="text-sm tracking-wide" style={{ color: "var(--foreground)" }}>
-          Renginių tiekėjų portalas
-        </span>
-      </header>
-
-      {/* HERO: SCENOS UŽDANGA */}
-      <section className="hero-stage grid md:grid-cols-2 gap-10 items-center">
-        <div>
-          <h1 className="text-4xl md:text-5xl font-semibold leading-tight" style={{ color: "var(--foreground)" }}>
-            Atverk uždangą <span style={{ color: "var(--gold)" }}>renginių kūrėjams</span>
-          </h1>
-          <p className="mt-4 text-lg" style={{ color: "rgba(255,255,255,0.80)" }}>
-            Fotografai, muzikantai, vedėjai, dekoratoriai, erdvės – visa scena vienoje vietoje. Tavo idėja verta šviesos.
-          </p>
-          <div className="mt-8 flex flex-wrap gap-4">
-            <Link
-              href="/tapk-tiekeju"
-              className="inline-flex items-center rounded-md px-5 py-3 font-medium hover:opacity-90"
-              style={{ backgroundColor: "var(--gold)", color: "#000" }}
-            >
-              Tapkite tiekėju
-            </Link>
-            <Link
-              href="/tiekejai"
-              className="inline-flex items-center rounded-md border px-5 py-3 font-medium hover:bg-black/10"
-              style={{ borderColor: "rgba(255,255,255,0.25)", color: "rgba(255,255,255,0.92)" }}
-            >
-              Peržiūrėti tiekėjus
-            </Link>
-          </div>
-        </div>
-
-        <div className="rounded-2xl border p-6"
-             style={{ borderColor: "rgba(255,255,255,0.15)", background: "rgba(0,0,0,0.2)" }}>
-          <h3 className="font-semibold mb-2" style={{ color: "rgba(255,255,255,0.95)" }}>Greita paieška</h3>
-          <form action="/tiekejai" className="grid gap-3">
-            <input className="border rounded-md px-3 py-2"
-                   placeholder="Kategorija (pvz. Fotografai)"
-                   style={{ borderColor: "rgba(255,255,255,0.22)", background: "transparent", color: "rgba(255,255,255,0.95)" }} />
-            <input className="border rounded-md px-3 py-2"
-                   placeholder="Miestas (pvz. Vilnius)"
-                   style={{ borderColor: "rgba(255,255,255,0.22)", background: "transparent", color: "rgba(255,255,255,0.95)" }} />
-            <button className="rounded-md px-4 py-2 hover:opacity-90"
-                    type="submit"
-                    style={{ background: "#000", color: "#fff", border: "1px solid rgba(255,255,255,0.18)" }}>
-              Ieškoti
-            </button>
-          </form>
-        </div>
-      </section>
-    </main>
-  );
+.mask-img{
+  width: min(var(--mask-w), var(--mask-max)); /* 👈 dydis */
+  height: auto;
+  filter: brightness(1.06) contrast(1.06);
+  box-shadow: 0 22px 36px rgba(0,0,0,0.85);
 }
