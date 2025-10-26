@@ -1,20 +1,19 @@
 @import "tailwindcss";
 
-/* === BAZĖ – spalvos, šriftas === */
+/* === BAZĖ — spalvos, šriftas === */
 :root{
   --bg:#0a0a0a;
   --fg:#f5f5f5;
-  --gold:#B68C2C;
 
-  /* 🎯 HERO v1 — tavo „tobula“ MOBILE (portretas) */
+  /* 🎭 KAUKĖ ir ✨ TEKSTAI — MOBILE (portretas) — tavo “tobulas” startas */
   --mask-visible: 1;
   --mask-w: 62vw;
   --mask-max: 100px;
-  --mask-shift: 30vh;        /* + žemyn, – aukštyn */
+  --mask-shift: 30vh;
 
-  --title-size: 40px;        /* Organizuokim.lt */
-  --title-shift: 10vh;       /* viso tekstų bloko poslinkis */
-  --subtitle-size: 18px;     /* Profesionalų kūrybos aljansas */
+  --title-size: 40px;
+  --title-shift: 10vh;
+  --subtitle-size: 18px;
 }
 
 @theme inline{
@@ -110,21 +109,24 @@ html,body{
   box-shadow: 0 22px 36px rgba(0,0,0,0.85);
 }
 
-/* === MOBILUS LANDSCAPE (telefonas paguldytas) ===================== */
+/* === MOBILUS — LANDSCAPE (telefonas paguldytas) =================== */
+/* Nuleidžiam kadrą: matysis ir lempos, ir grindys */
 @media (orientation: landscape) and (max-width: 900px){
   .hero{
     background-image: url("/hero-desktop.png");
-    background-position: center 18%;
+    background-position: center 75%; /* ← jei grindų dar trūksta, didink iki 60–65% */
     background-size: cover;
+    min-height: 100svh;
   }
   :root{
     --mask-visible: 1;
-    --mask-w: 28vw;
-    --mask-max: 110px;
-    --mask-shift: 4vh;
-    --title-size: 26px;
-    --title-shift: -2vh;
-    --subtitle-size: 15px;
+    --mask-w: 22vw;       /* REGULIUOSI ČIA (plotis %) */
+    --mask-max: 60px;    /* REGULIUOSI ČIA (kaukės lubos px) */
+    --mask-shift: 20vh;   /* REGULIUOSI ČIA (aukštyn - / žemyn +) */
+
+    --title-size: 24px;
+    --title-shift: 10vh;  /* REGULIUOSI ČIA (aukštyn - / žemyn +) */
+    --subtitle-size: 14px;
   }
 }
 
@@ -142,7 +144,7 @@ html,body{
   }
 }
 
-/* === DESKTOP (≥1024px) — horizontali hero ========================= */
+/* === DESKTOP (≥1024px) — horizontalus fonas ====================== */
 @media (min-width: 1024px){
   .hero{
     background-image: url("/hero-desktop.png");
@@ -151,7 +153,7 @@ html,body{
   }
 }
 
-/* === MacBook Pro (≥1280px) — tavo „auksinės“ reikšmės ============== */
+/* === MacBook Pro (≥1280px) — tavo auksinės reikšmės =============== */
 @media (min-width: 1280px){
   :root{
     --mask-visible: 1;
@@ -165,11 +167,11 @@ html,body{
   }
 }
 
-/* === PLANŠETĖ LANDSCAPE / vidutiniai ekranai ====================== */
+/* === Vidutiniai ekranai (žemesni, ≤900px aukščio) ================= */
 @media (min-width: 1024px) and (max-height: 900px){
   :root{
-    --mask-shift: 28vh;    /* buvo 25vh → truputį žemyn */
-    --title-shift: 18vh;   /* buvo 15vh → truputį žemyn */
+    --mask-shift: 28vh;
+    --title-shift: 18vh;
   }
 }
 
