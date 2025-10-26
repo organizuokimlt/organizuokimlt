@@ -203,3 +203,121 @@ html,body{
     background-position: center bottom;
   }
 }
+/* === NAV – Spotlight pill === */
+.nav-pill {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: .5rem;
+  padding: .55rem .9rem;
+  border-radius: 999px;
+  color: #fff;
+  background: rgba(255,255,255,.08);
+  backdrop-filter: blur(4px);
+  box-shadow: 0 8px 26px rgba(0,0,0,.35), inset 0 0 0 1px rgba(255,255,255,.12);
+  transition: transform .18s ease, background .3s ease, box-shadow .3s ease;
+  overflow: hidden;
+}
+.nav-pill:hover { transform: translateY(-1px); background: rgba(255,255,255,.12); }
+
+.nav-pill::before{
+  content:"";
+  position:absolute; inset:-1px;
+  background: linear-gradient(120deg, transparent 0%, rgba(255,255,255,.28) 45%, transparent 90%);
+  transform: translateX(-120%);
+  transition: transform .6s ease;
+  mix-blend-mode: screen;
+}
+.nav-pill:hover::before{ transform: translateX(120%); }/* === NAV – „ghost“ link’ai + dūminis pabraukimas ================== */
+.nav-link{
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 12px;
+  border-radius: 9999px;
+  border: 1px solid rgba(255,255,255,.12);
+  background: rgba(255,255,255,.04);
+  color: rgba(255,255,255,.92);
+  font-weight: 600;
+  font-size: clamp(12px, 3.2vw, 15px);
+  letter-spacing: .01em;
+  transition: all .18s ease;
+}
+.nav-link::after{
+  content:"";
+  position:absolute;
+  left: 12px; right: 12px; bottom: 5px;
+  height: 1px;
+  background:
+    radial-gradient(40% 120% at 50% 50%, rgba(245,235,200,.65), transparent 70%);
+  opacity: .0;
+  transform: translateY(2px);
+  transition: opacity .2s ease, transform .2s ease;
+  pointer-events:none;
+}
+.nav-link:hover{
+  border-color: rgba(255,255,255,.22);
+  background: rgba(255,255,255,.07);
+  text-shadow: 0 2px 12px rgba(0,0,0,.35);
+}
+.nav-link:hover::after{
+  opacity: .9;
+  transform: translateY(0);
+}
+
+/* Mažuose ekranuose truputį glaudžiau */
+@media (max-width: 380px){
+  .nav-link{ padding: 7px 10px; }
+}
+
+/* „Tapk tiekėju“ – spotlight (jau turi .nav-pill klasę) — paliekam kaip yra *//* NAV ghost mygtukai */
+.nav-link{
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: .5rem;
+  padding: 8px 12px;
+  border-radius: 9999px;
+  border: 1px solid rgba(255,255,255,.12);
+  background: rgba(255,255,255,.04);
+  color: rgba(255,255,255,.92);
+  font-weight: 600;
+  font-size: clamp(12px, 3.2vw, 15px);
+  letter-spacing: .01em;
+  transition: all .18s ease;
+  text-decoration: none;
+}
+.nav-link::after{
+  content:"";
+  position:absolute; left: 12px; right: 12px; bottom: 6px; height: 1px;
+  background: radial-gradient(40% 120% at 50% 50%, rgba(245,235,200,.55), transparent 70%);
+  opacity: .0; transform: translateY(2px);
+  transition: opacity .2s ease, transform .2s ease; pointer-events:none;
+}
+.nav-link:hover{
+  border-color: rgba(255,255,255,.22);
+  background: rgba(255,255,255,.07);
+  text-shadow: 0 2px 12px rgba(0,0,0,.35);
+}
+.nav-link:hover::after{ opacity: .9; transform: translateY(0); }
+
+/* CTA piliukas (paliekam tavo „spotlight“ stilių, jeigu jau turėjom) */
+.nav-pill{
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  padding: 10px 16px;
+  border-radius: 9999px;
+  color: #111; font-weight: 700;
+  background: radial-gradient(140% 140% at 50% -30%, #F6EECB 0%, #E7D9A7 30%, #D7C58A 48%, #C7B46C 60%, #B7A250 75%, #897C38 100%);
+  box-shadow:
+    0 20px 60px rgba(0,0,0,.45),
+    inset 0 1px 0 rgba(255,255,255,.55),
+    inset 0 -1px 0 rgba(0,0,0,.25);
+  transition: transform .12s ease, filter .12s ease;
+  text-decoration: none;
+}
+.nav-pill:hover{ transform: translateY(-1px); filter: brightness(1.03) contrast(1.02); }
+.nav-pill:active{ transform: translateY(0); filter: brightness(0.98); }
