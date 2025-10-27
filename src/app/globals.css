@@ -113,7 +113,7 @@ html,body{
 @media (orientation: landscape) and (max-width: 900px){
   .hero{
     background-image: url("/hero-desktop.png");
-    background-position: center 75%;
+    background-position: center 50%;
     background-size: cover;
     min-height: 100svh;
   }
@@ -121,10 +121,10 @@ html,body{
     --mask-visible: 1;
     --mask-w: 22vw;
     --mask-max: 60px;
-    --mask-shift: 20vh;
+    --mask-shift: 30vh;
 
     --title-size: 24px;
-    --title-shift: 10vh;
+    --title-shift: 20vh;
     --subtitle-size: 14px;
   }
 }
@@ -185,6 +185,11 @@ html,body{
     --title-shift: 14vh;
     --subtitle-size: 34px;
   }
+  .hero{
+    /* Apple Studio Display reguliavimas */
+    background-position: center 72%;
+    background-size: cover;
+  }
 }
 
 /* === TV / Ultrawide (≥2048px) ===================================== */
@@ -192,14 +197,15 @@ html,body{
   :root{
     --mask-w: 28vw;
     --mask-max: 240px;
-    --mask-shift: 20vh;
+    --mask-shift: 30vh;
 
     --title-size: 82px;
-    --title-shift: 13vh;
+    --title-shift: 23vh;
     --subtitle-size: 36px;
   }
   .hero{
-    background-position: center bottom;
+    background-position: center 70%;
+    background-size: cover;
   }
 }
 
@@ -218,7 +224,7 @@ html,body{
   z-index: 50;
 }
 
-/* Kairio krašto scrim — nuo pat kairės, išnyksta ties „.lt“ */
+/* Kairio krašto scrim — nuo pat kairės, išnyksta ties „.lt“ (desktop) */
 @media (min-width: 901px){
   .header::before{
     content:"";
@@ -357,11 +363,11 @@ html,body{
 }
 
 /* nelygūs pjūviai – atitinka desktop logiką */
-.mobile-menu a:nth-child(1){ /* Rask tiekėją */
+.mobile-menu a:nth-child(1){
   border-radius: 28px 0 0 12px;
   clip-path: polygon(0 0, 100% 0, 94% 100%, 0% 100%);
 }
-.mobile-menu a:nth-child(2){ /* Žinių scena */
+.mobile-menu a:nth-child(2){
   clip-path: polygon(0 8%, 100% 0, 88% 100%, 0% 100%);
 }
 .mobile-menu a:nth-child(2)::before{
@@ -372,10 +378,10 @@ html,body{
   clip-path: polygon(100% 0, 0 50%, 100% 100%);
   pointer-events:none;
 }
-.mobile-menu a:nth-child(3){ /* Kodėl mes? */
+.mobile-menu a:nth-child(3){
   clip-path: polygon(0 40%, 10% 0, 100% 0, 95% 100%, 0 100%);
 }
-.mobile-menu a:nth-child(4){ /* Tapk tiekėju / Prisijungti */
+.mobile-menu a:nth-child(4){
   border-radius: 10px 24px 24px 10px;
   clip-path: polygon(0 0, 95% 0, 100% 100%, 0% 100%);
 }
@@ -384,11 +390,13 @@ html,body{
 @media (max-width: 900px) {
   .nav { display: none; }
   .burger { display: flex; }
-}/* === Backdrop mygtukas, kad uždaryti meniu paspaudus bet kur ========= */
+}
+
+/* === Backdrop mygtukas, kad uždaryti meniu paspaudus bet kur ========= */
 .menu-backdrop{
   position: fixed;
   top: 74px; left: 0; right: 0; bottom: 0;
-  background: transparent; /* neregima, tik „catchina“ paspaudimą */
-  z-index: 35; /* po .mobile-menu (40), virš turinio */
+  background: transparent;
+  z-index: 35;
   border: none; padding: 0; margin: 0;
 }
